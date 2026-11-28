@@ -19,6 +19,11 @@ All notable changes are listed here. Versions follow Semantic Versioning.
   machine too, with a per-system table in docs/PERFORMANCE.md; the VM
   setup is in docs/TESTING.md (#206).
 
+### Fixed
+- Linux .deb: list the libraries the window system loads at run time
+  (xkbcommon-x11, EGL, Wayland) as dependencies, so Text³ no longer stops
+  at start on minimal installs (#211).
+
 ### Changed
 - README and website screenshots retaken from a Text³ build; they no
   longer show the old name. `scripts/screenshots/shoot.py` retakes them
