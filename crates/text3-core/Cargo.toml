@@ -11,6 +11,7 @@ publish.workspace = true
 [dependencies]
 ropey.workspace = true
 regex.workspace = true
+regex-syntax.workspace = true
 thiserror.workspace = true
 unicode-segmentation.workspace = true
 unicode-width.workspace = true

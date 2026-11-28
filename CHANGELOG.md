@@ -5,6 +5,11 @@ All notable changes are listed here. Versions follow Semantic Versioning.
 ## [Unreleased]
 
 ### Performance
+- Find and Replace All no longer copy the whole document: the text is
+  searched in pieces of about 1 MB that end at line breaks (whole-text
+  search is kept for patterns that can match a line break). Finding in a
+  100 MB file peaks at 427 MiB instead of 627 MiB, at the same speed
+  (#210).
 - Typing in a large file no longer rescans the whole text for its line
   endings on every keystroke: per-keystroke work in a 50 MB file drops
   from about 29 ms to 4 ms (Apple M5), so typing keeps up with a 60 Hz
