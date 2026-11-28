@@ -28,6 +28,21 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS = ["LICENSE", "README.md", "CHANGELOG.md"]
 
 
+
+# Libraries winit and glutin open at run time (X11, Wayland, EGL/GL).
+DLOPEN_DEPENDS = [
+    "libxkbcommon0",
+    "libxkbcommon-x11-0",
+    "libx11-6",
+    "libx11-xcb1",
+    "libxcursor1",
+    "libxi6",
+    "libegl1",
+    "libwayland-client0",
+    "libwayland-cursor0",
+    "libwayland-egl1",
+]
+
 def run(*cmd):
     subprocess.run(cmd, check=True, cwd=ROOT)
 
@@ -291,6 +306,9 @@ def linux_deb(ver, arch, dist, notices):
         shutil.rmtree(os.path.join(root, "debian"))
         if r.returncode == 0 and "shlibs:Depends=" in r.stdout:
             depends = r.stdout.split("shlibs:Depends=", 1)[1].strip()
+    # The window library loads these with dlopen, so dpkg-shlibdeps cannot
+    # see them; without them Text³ stops at start on minimal installs (#211).
+    depends += ", " + ", ".join(DLOPEN_DEPENDS)
     size_kb = sum(
         os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(root) for f in fs
     ) // 1024
