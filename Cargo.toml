@@ -20,6 +20,7 @@ fluent-bundle = "0.16"
 unic-langid = "0.9.6"
 proptest = "1"
 regex = "1.13"
+regex-syntax = { version = "0.8", default-features = false, features = ["std", "unicode"] }
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

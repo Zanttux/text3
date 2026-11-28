@@ -17,6 +17,10 @@ use crate::transaction::{Change, Transaction};
 pub const MATCH_LIMIT: usize = 100_000;
 /// Upper bound on compiled pattern size (bytes), against pattern bombs.
 const PATTERN_SIZE_LIMIT: usize = 1 << 20;
+/// Searching a document goes through pieces of about this many bytes,
+/// each ending after a line break, instead of one copy of the whole text
+/// (#210). Only for patterns that cannot match a line break.
+const SEGMENT: usize = if cfg!(test) { 64 } else { 1 << 20 };
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash)]
 pub struct Query {
@@ -36,6 +40,9 @@ pub enum SearchError {
 pub struct Matcher {
     re: Regex,
     regex_mode: bool,
+    /// The pattern can never match `\n`, so no match crosses a line
+    /// break and the text can be searched piece by piece.
+    within_lines: bool,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
@@ -70,9 +77,17 @@ impl Query {
             .size_limit(PATTERN_SIZE_LIMIT)
             .build()
             .map_err(|e| SearchError::InvalidPattern(e.to_string()))?;
+        let within_lines = regex_syntax::ParserBuilder::new()
+            .case_insensitive(!self.case_sensitive)
+            .multi_line(true)
+            .crlf(true)
+            .build()
+            .parse(&pattern)
+            .is_ok_and(|hir| !can_match_newline(&hir));
         Ok(Some(Matcher {
             re,
             regex_mode: self.regex,
+            within_lines,
         }))
     }
 }
@@ -87,6 +102,44 @@ impl Matcher {
             .map(|m| m.range())
     }
 
+    /// Call `f` with the document's text and the char index it starts
+    /// at: in pieces of about [`SEGMENT`] bytes, each ending after a line
+    /// break, when no match can cross one; otherwise in one piece.
+    /// Returns false when `f` cancelled.
+    fn segments(&self, rope: &Rope, mut f: impl FnMut(&str, usize) -> Seg) -> bool {
+        if !self.within_lines || rope.len_bytes() <= SEGMENT {
+            return f(&rope.to_string(), 0) != Seg::Cancel;
+        }
+        let mut buf = String::with_capacity(SEGMENT + 64 * 1024);
+        let mut base = 0usize;
+        let mut chunks = rope.chunks().peekable();
+        while let Some(chunk) = chunks.next() {
+            buf.push_str(chunk);
+            let last = chunks.peek().is_none();
+            if buf.len() < SEGMENT && !last {
+                continue;
+            }
+            // Search up to the last line break; carry the rest over.
+            let cut = if last {
+                buf.len()
+            } else {
+                match buf.rfind('\n') {
+                    Some(i) => i + 1,
+                    None => continue,
+                }
+            };
+            let piece = &buf[..cut];
+            match f(piece, base) {
+                Seg::Next => {}
+                Seg::Stop => return true,
+                Seg::Cancel => return false,
+            }
+            base += piece.chars().count();
+            buf.drain(..cut);
+        }
+        true
+    }
+
     pub fn find_all(&self, rope: &Rope) -> Matches {
         self.find_all_cancellable(rope, &std::sync::atomic::AtomicBool::new(false))
             .unwrap_or_default()
@@ -99,57 +152,64 @@ impl Matcher {
         rope: &Rope,
         cancel: &std::sync::atomic::AtomicBool,
     ) -> Option<Matches> {
-        let text = rope.to_string();
         let mut out = Matches::default();
-        // Walk byte offsets and convert to chars incrementally (matches are
-        // ascending), avoiding a rope lookup per match.
-        let (mut byte, mut chr) = (0usize, 0usize);
-        for m in self.re.find_iter(&text) {
-            if m.start() == m.end() {
-                continue;
+        let done = self.segments(rope, |text, base| {
+            // Walk byte offsets and convert to chars incrementally (matches
+            // are ascending), avoiding a rope lookup per match.
+            let (mut byte, mut chr) = (0usize, base);
+            for m in self.re.find_iter(text) {
+                if m.start() == m.end() {
+                    continue;
+                }
+                if out.ranges.len() == MATCH_LIMIT {
+                    out.truncated = true;
+                    return Seg::Stop;
+                }
+                if out.ranges.len().is_multiple_of(1024)
+                    && cancel.load(std::sync::atomic::Ordering::Relaxed)
+                {
+                    return Seg::Cancel;
+                }
+                chr += text[byte..m.start()].chars().count();
+                let start = chr;
+                chr += m.as_str().chars().count();
+                byte = m.end();
+                out.ranges.push(start..chr);
             }
-            if out.ranges.len() == MATCH_LIMIT {
-                out.truncated = true;
-                break;
+            if cancel.load(std::sync::atomic::Ordering::Relaxed) {
+                return Seg::Cancel;
             }
-            if out.ranges.len().is_multiple_of(1024)
-                && cancel.load(std::sync::atomic::Ordering::Relaxed)
-            {
-                return None;
-            }
-            chr += text[byte..m.start()].chars().count();
-            let start = chr;
-            chr += m.as_str().chars().count();
-            byte = m.end();
-            out.ranges.push(start..chr);
-        }
-        Some(out)
+            Seg::Next
+        });
+        done.then_some(out)
     }
 
     /// Replace every match with `replacement` in one transaction. In regex
     /// mode, `$1` / `${name}` expand capture groups; otherwise the text is
     /// inserted literally. Returns the transaction and the number replaced.
     pub fn replace_all(&self, rope: &Rope, replacement: &str) -> (Transaction, usize) {
-        let text = rope.to_string();
         let mut edits: Vec<(Range<usize>, String)> = Vec::new();
-        let (mut byte, mut chr) = (0usize, 0usize);
-        for caps in self.re.captures_iter(&text) {
-            let Some(m) = caps.get(0) else { continue };
-            if m.start() == m.end() {
-                continue;
+        self.segments(rope, |text, base| {
+            let (mut byte, mut chr) = (0usize, base);
+            for caps in self.re.captures_iter(text) {
+                let Some(m) = caps.get(0) else { continue };
+                if m.start() == m.end() {
+                    continue;
+                }
+                let mut with = String::new();
+                if self.regex_mode {
+                    caps.expand(replacement, &mut with);
+                } else {
+                    with.push_str(replacement);
+                }
+                chr += text[byte..m.start()].chars().count();
+                let start = chr;
+                chr += m.as_str().chars().count();
+                byte = m.end();
+                edits.push((start..chr, with));
             }
-            let mut with = String::new();
-            if self.regex_mode {
-                caps.expand(replacement, &mut with);
-            } else {
-                with.push_str(replacement);
-            }
-            chr += text[byte..m.start()].chars().count();
-            let start = chr;
-            chr += m.as_str().chars().count();
-            byte = m.end();
-            edits.push((start..chr, with));
-        }
+            Seg::Next
+        });
         let mut tx = Transaction::new();
         for (range, with) in edits.iter().rev() {
             tx.push(Change::replace(range.clone(), with.clone()));
@@ -243,8 +303,109 @@ impl Matches {
     }
 }
 
+/// What [`Matcher::segments`] does after a piece.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Seg {
+    Next,
+    /// Enough found (match limit).
+    Stop,
+    Cancel,
+}
+
+/// Whether a match of `hir` could contain `\n`.
+fn can_match_newline(hir: &regex_syntax::hir::Hir) -> bool {
+    use regex_syntax::hir::{Class, HirKind};
+    match hir.kind() {
+        HirKind::Empty | HirKind::Look(_) => false,
+        HirKind::Literal(l) => l.0.contains(&b'\n'),
+        HirKind::Class(Class::Unicode(c)) => c
+            .ranges()
+            .iter()
+            .any(|r| r.start() <= '\n' && '\n' <= r.end()),
+        HirKind::Class(Class::Bytes(c)) => c
+            .ranges()
+            .iter()
+            .any(|r| r.start() <= b'\n' && b'\n' <= r.end()),
+        HirKind::Repetition(r) => can_match_newline(&r.sub),
+        HirKind::Capture(c) => can_match_newline(&c.sub),
+        HirKind::Concat(v) | HirKind::Alternation(v) => v.iter().any(can_match_newline),
+    }
+}
+
 #[cfg(test)]
 mod tests {
+
+    /// Pieces give exactly the matches of one search over the whole text.
+    #[test]
+    fn pieces_match_the_whole_text() {
+        let mut text = String::new();
+        for i in 0..400 {
+            text.push_str(match i % 5 {
+                0 => "alpha beta äö gamma\n",
+                1 => "Beta\r\n",
+                2 => "",
+                3 => "a long line without much in it but beta at the end beta\n",
+                _ => "😀 beta\tgamma  \n",
+            });
+        }
+        let rope = Rope::from_str(&text);
+        let queries = [
+            ("beta", false, false, false),
+            ("beta", false, true, true),
+            ("gamma\\s*$", true, false, false),
+            ("^\\w+", true, true, false),
+            ("ä.", true, false, false),
+            ("beta\\s+gamma", true, false, false),
+            ("\\n\\n", true, false, false),
+            ("beta\\r?\\nalpha", true, false, false),
+            ("[^a]+", true, false, false),
+            ("😀", false, false, false),
+        ];
+        for (pattern, regex, case_sensitive, whole_word) in queries {
+            let q = Query {
+                pattern: pattern.into(),
+                regex,
+                case_sensitive,
+                whole_word,
+            };
+            let m = q.compile().unwrap().unwrap();
+            let want: Vec<Range<usize>> = m
+                .find_in_str(&text)
+                .map(|r| text[..r.start].chars().count()..text[..r.end].chars().count())
+                .collect();
+            assert_eq!(m.find_all(&rope).ranges, want, "{pattern}");
+            let (tx, n) = m.replace_all(&rope, "X");
+            assert_eq!(n, want.len(), "{pattern}");
+            let mut after = rope.clone();
+            tx.apply(&mut after).unwrap();
+            let whole = m.re.replace_all(&text, regex::NoExpand("X"));
+            assert_eq!(after.to_string(), whole, "{pattern}");
+        }
+    }
+
+    #[test]
+    fn line_break_patterns_search_the_whole_text() {
+        let within = |p: &str| {
+            Query {
+                pattern: p.into(),
+                regex: true,
+                ..Default::default()
+            }
+            .compile()
+            .unwrap()
+            .unwrap()
+            .within_lines
+        };
+        assert!(within("beta"));
+        assert!(within("a.b"));
+        assert!(within("^x$"));
+        assert!(within("[a-z]+"));
+        assert!(!within("a\\nb"));
+        assert!(!within("\\s"));
+        assert!(!within("[^a]"));
+        assert!(!within("(?s)a.b"));
+        assert!(!within("\\W"));
+    }
 
     #[test]
     fn regex_keeps_crlf() {
