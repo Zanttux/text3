@@ -1,0 +1,1081 @@
+{
+ "kind": "workloads",
+ "date": "2026-11-28",
+ "set": "full",
+ "runs": 5,
+ "method": "scripts/bench/workloads.py",
+ "machine": {
+  "os": "Linux-6.8.0-147-generic-aarch64-with-glibc2.39",
+  "machine": "aarch64",
+  "python": "3.12.3",
+  "cpus": 4,
+  "load_average_start": [
+   1.4,
+   0.5,
+   0.3
+  ],
+  "load_average_end": [
+   2.2,
+   0.8,
+   0.4
+  ],
+  "note": "Ubuntu 24.04 ARM64 in a UTM virtual machine (QEMU with Apple Hypervisor), 4 virtual cores, 8 GB, on the Apple M5 above; painting in software under Xvfb (Mesa)",
+  "commit": "c97bee1"
+ },
+ "binary_bytes": 56752120,
+ "workloads": {
+  "open-10mb": {
+   "scenario": "open",
+   "file_bytes": 10485703,
+   "env": {},
+   "summary": {
+    "bytes": {
+     "median": 10485703,
+     "p95": 10485703,
+     "min": 10485703,
+     "max": 10485703
+    },
+    "chars": {
+     "median": 10485703,
+     "p95": 10485703,
+     "min": 10485703,
+     "max": 10485703
+    },
+    "lines": {
+     "median": 133009,
+     "p95": 133009,
+     "min": 133009,
+     "max": 133009
+    },
+    "open_call_ms": {
+     "median": 21.925,
+     "p95": 25.338,
+     "min": 21.541,
+     "max": 25.338
+    },
+    "peak_rss_mib": {
+     "median": 175.35546875,
+     "p95": 175.45703125,
+     "min": 175.09765625,
+     "max": 175.45703125
+    },
+    "shown_ms": {
+     "median": 41.868,
+     "p95": 44.531,
+     "min": 40.802,
+     "max": 44.531
+    },
+    "total_ms": {
+     "median": 63.938,
+     "p95": 67.526,
+     "min": 60.114,
+     "max": 67.526
+    },
+    "scenario": "open",
+    "viewer": "editor"
+   },
+   "runs": [
+    {
+     "scenario": "open",
+     "bytes": 10485703,
+     "viewer": "editor",
+     "open_call_ms": 25.338,
+     "shown_ms": 44.531,
+     "chars": 10485703,
+     "lines": 133009,
+     "total_ms": 67.526,
+     "peak_rss_mib": 175.421875
+    },
+    {
+     "scenario": "open",
+     "bytes": 10485703,
+     "viewer": "editor",
+     "open_call_ms": 21.925,
+     "shown_ms": 40.916,
+     "chars": 10485703,
+     "lines": 133009,
+     "total_ms": 63.332,
+     "peak_rss_mib": 175.35546875
+    },
+    {
+     "scenario": "open",
+     "bytes": 10485703,
+     "viewer": "editor",
+     "open_call_ms": 21.704,
+     "shown_ms": 43.851,
+     "chars": 10485703,
+     "lines": 133009,
+     "total_ms": 63.938,
+     "peak_rss_mib": 175.265625
+    },
+    {
+     "scenario": "open",
+     "bytes": 10485703,
+     "viewer": "editor",
+     "open_call_ms": 24.063,
+     "shown_ms": 41.868,
+     "chars": 10485703,
+     "lines": 133009,
+     "total_ms": 64.903,
+     "peak_rss_mib": 175.45703125
+    },
+    {
+     "scenario": "open",
+     "bytes": 10485703,
+     "viewer": "editor",
+     "open_call_ms": 21.541,
+     "shown_ms": 40.802,
+     "chars": 10485703,
+     "lines": 133009,
+     "total_ms": 60.114,
+     "peak_rss_mib": 175.09765625
+    }
+   ]
+  },
+  "open-100mb": {
+   "scenario": "open",
+   "file_bytes": 104857598,
+   "env": {},
+   "summary": {
+    "bytes": {
+     "median": 104857598,
+     "p95": 104857598,
+     "min": 104857598,
+     "max": 104857598
+    },
+    "chars": {
+     "median": 104857598,
+     "p95": 104857598,
+     "min": 104857598,
+     "max": 104857598
+    },
+    "lines": {
+     "median": 1330075,
+     "p95": 1330075,
+     "min": 1330075,
+     "max": 1330075
+    },
+    "open_call_ms": {
+     "median": 176.619,
+     "p95": 187.421,
+     "min": 174.68,
+     "max": 187.421
+    },
+    "peak_rss_mib": {
+     "median": 366.91015625,
+     "p95": 368.4296875,
+     "min": 366.77734375,
+     "max": 368.4296875
+    },
+    "shown_ms": {
+     "median": 201.491,
+     "p95": 212.687,
+     "min": 199.151,
+     "max": 212.687
+    },
+    "total_ms": {
+     "median": 222.749,
+     "p95": 236.165,
+     "min": 219.995,
+     "max": 236.165
+    },
+    "scenario": "open",
+    "viewer": "editor"
+   },
+   "runs": [
+    {
+     "scenario": "open",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 187.421,
+     "shown_ms": 212.687,
+     "chars": 104857598,
+     "lines": 1330075,
+     "total_ms": 236.165,
+     "peak_rss_mib": 368.4296875
+    },
+    {
+     "scenario": "open",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 174.68,
+     "shown_ms": 199.609,
+     "chars": 104857598,
+     "lines": 1330075,
+     "total_ms": 219.995,
+     "peak_rss_mib": 366.94921875
+    },
+    {
+     "scenario": "open",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 176.276,
+     "shown_ms": 201.491,
+     "chars": 104857598,
+     "lines": 1330075,
+     "total_ms": 222.348,
+     "peak_rss_mib": 366.91015625
+    },
+    {
+     "scenario": "open",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 176.619,
+     "shown_ms": 199.151,
+     "chars": 104857598,
+     "lines": 1330075,
+     "total_ms": 222.749,
+     "peak_rss_mib": 366.77734375
+    },
+    {
+     "scenario": "open",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 178.618,
+     "shown_ms": 203.624,
+     "chars": 104857598,
+     "lines": 1330075,
+     "total_ms": 223.73,
+     "peak_rss_mib": 366.83203125
+    }
+   ]
+  },
+  "open-300mb": {
+   "scenario": "open",
+   "file_bytes": 314572735,
+   "env": {},
+   "summary": {
+    "bytes": {
+     "median": 314572735,
+     "p95": 314572735,
+     "min": 314572735,
+     "max": 314572735
+    },
+    "indexed_ms": {
+     "median": 147.401,
+     "p95": 149.868,
+     "min": 145.0,
+     "max": 149.868
+    },
+    "lines": {
+     "median": 3990220,
+     "p95": 3990220,
+     "min": 3990220,
+     "max": 3990220
+    },
+    "open_call_ms": {
+     "median": 0.062,
+     "p95": 0.074,
+     "min": 0.051,
+     "max": 0.074
+    },
+    "peak_rss_mib": {
+     "median": 207.42578125,
+     "p95": 207.67578125,
+     "min": 206.796875,
+     "max": 207.67578125
+    },
+    "shown_ms": {
+     "median": 14.992,
+     "p95": 16.64,
+     "min": 14.69,
+     "max": 16.64
+    },
+    "total_ms": {
+     "median": 170.046,
+     "p95": 173.559,
+     "min": 167.511,
+     "max": 173.559
+    },
+    "scenario": "open",
+    "viewer": "log"
+   },
+   "runs": [
+    {
+     "scenario": "open",
+     "bytes": 314572735,
+     "viewer": "log",
+     "open_call_ms": 0.062,
+     "shown_ms": 14.935,
+     "indexed_ms": 149.868,
+     "lines": 3990220,
+     "total_ms": 173.559,
+     "peak_rss_mib": 206.796875
+    },
+    {
+     "scenario": "open",
+     "bytes": 314572735,
+     "viewer": "log",
+     "open_call_ms": 0.063,
+     "shown_ms": 14.69,
+     "indexed_ms": 147.401,
+     "lines": 3990220,
+     "total_ms": 170.087,
+     "peak_rss_mib": 207.55078125
+    },
+    {
+     "scenario": "open",
+     "bytes": 314572735,
+     "viewer": "log",
+     "open_call_ms": 0.074,
+     "shown_ms": 14.992,
+     "indexed_ms": 145.138,
+     "lines": 3990220,
+     "total_ms": 170.046,
+     "peak_rss_mib": 207.42578125
+    },
+    {
+     "scenario": "open",
+     "bytes": 314572735,
+     "viewer": "log",
+     "open_call_ms": 0.051,
+     "shown_ms": 15.098,
+     "indexed_ms": 147.416,
+     "lines": 3990220,
+     "total_ms": 167.511,
+     "peak_rss_mib": 207.67578125
+    },
+    {
+     "scenario": "open",
+     "bytes": 314572735,
+     "viewer": "log",
+     "open_call_ms": 0.057,
+     "shown_ms": 16.64,
+     "indexed_ms": 145.0,
+     "lines": 3990220,
+     "total_ms": 167.603,
+     "peak_rss_mib": 206.953125
+    }
+   ]
+  },
+  "log-1gb": {
+   "scenario": "log",
+   "file_bytes": 1073741806,
+   "env": {
+    "QUERY": "ERROR",
+    "REGEX": "ERROR .*id=\\d*7\\b"
+   },
+   "summary": {
+    "bytes": {
+     "median": 1073741806,
+     "p95": 1073741806,
+     "min": 1073741806,
+     "max": 1073741806
+    },
+    "filter_matches": {
+     "median": 256981,
+     "p95": 256981,
+     "min": 256981,
+     "max": 256981
+    },
+    "filter_ms": {
+     "median": 973.479,
+     "p95": 1051.756,
+     "min": 963.851,
+     "max": 1051.756
+    },
+    "indexed_ms": {
+     "median": 446.254,
+     "p95": 496.317,
+     "min": 432.848,
+     "max": 496.317
+    },
+    "lines": {
+     "median": 13619950,
+     "p95": 13619950,
+     "min": 13619950,
+     "max": 13619950
+    },
+    "open_call_ms": {
+     "median": 0.054,
+     "p95": 0.085,
+     "min": 0.043,
+     "max": 0.085
+    },
+    "peak_rss_mib": {
+     "median": 310.66796875,
+     "p95": 328.171875,
+     "min": 310.28515625,
+     "max": 328.171875
+    },
+    "regex_matches": {
+     "median": 25070,
+     "p95": 25070,
+     "min": 25070,
+     "max": 25070
+    },
+    "regex_ms": {
+     "median": 978.222,
+     "p95": 983.984,
+     "min": 970.719,
+     "max": 983.984
+    },
+    "shown_ms": {
+     "median": 17.7,
+     "p95": 20.422,
+     "min": 14.752,
+     "max": 20.422
+    },
+    "total_ms": {
+     "median": 2411.151,
+     "p95": 2497.908,
+     "min": 2400.469,
+     "max": 2497.908
+    },
+    "scenario": "log",
+    "viewer": "log"
+   },
+   "runs": [
+    {
+     "scenario": "log",
+     "bytes": 1073741806,
+     "viewer": "log",
+     "open_call_ms": 0.085,
+     "shown_ms": 17.7,
+     "indexed_ms": 496.317,
+     "lines": 13619950,
+     "filter_ms": 983.847,
+     "filter_matches": 256981,
+     "regex_ms": 982.273,
+     "regex_matches": 25070,
+     "total_ms": 2488.799,
+     "peak_rss_mib": 313.31640625
+    },
+    {
+     "scenario": "log",
+     "bytes": 1073741806,
+     "viewer": "log",
+     "open_call_ms": 0.072,
+     "shown_ms": 20.422,
+     "indexed_ms": 446.332,
+     "lines": 13619950,
+     "filter_ms": 1051.756,
+     "filter_matches": 256981,
+     "regex_ms": 978.222,
+     "regex_matches": 25070,
+     "total_ms": 2497.908,
+     "peak_rss_mib": 310.66796875
+    },
+    {
+     "scenario": "log",
+     "bytes": 1073741806,
+     "viewer": "log",
+     "open_call_ms": 0.054,
+     "shown_ms": 14.752,
+     "indexed_ms": 446.254,
+     "lines": 13619950,
+     "filter_ms": 963.851,
+     "filter_matches": 256981,
+     "regex_ms": 970.719,
+     "regex_matches": 25070,
+     "total_ms": 2400.879,
+     "peak_rss_mib": 310.28515625
+    },
+    {
+     "scenario": "log",
+     "bytes": 1073741806,
+     "viewer": "log",
+     "open_call_ms": 0.05,
+     "shown_ms": 16.847,
+     "indexed_ms": 439.542,
+     "lines": 13619950,
+     "filter_ms": 964.364,
+     "filter_matches": 256981,
+     "regex_ms": 972.277,
+     "regex_matches": 25070,
+     "total_ms": 2400.469,
+     "peak_rss_mib": 310.62109375
+    },
+    {
+     "scenario": "log",
+     "bytes": 1073741806,
+     "viewer": "log",
+     "open_call_ms": 0.043,
+     "shown_ms": 20.114,
+     "indexed_ms": 432.848,
+     "lines": 13619950,
+     "filter_ms": 973.479,
+     "filter_matches": 256981,
+     "regex_ms": 983.984,
+     "regex_matches": 25070,
+     "total_ms": 2411.151,
+     "peak_rss_mib": 328.171875
+    }
+   ]
+  },
+  "find-100mb": {
+   "scenario": "find",
+   "file_bytes": 104857598,
+   "env": {
+    "QUERY": "timeout",
+    "REGEX": "time\\w*out after \\d+ ms"
+   },
+   "summary": {
+    "bytes": {
+     "median": 104857598,
+     "p95": 104857598,
+     "min": 104857598,
+     "max": 104857598
+    },
+    "chars": {
+     "median": 104857598,
+     "p95": 104857598,
+     "min": 104857598,
+     "max": 104857598
+    },
+    "find_matches": {
+     "median": 32441,
+     "p95": 32441,
+     "min": 32441,
+     "max": 32441
+    },
+    "find_ms": {
+     "median": 40.249,
+     "p95": 46.213,
+     "min": 36.894,
+     "max": 46.213
+    },
+    "find_regex_matches": {
+     "median": 32441,
+     "p95": 32441,
+     "min": 32441,
+     "max": 32441
+    },
+    "find_regex_ms": {
+     "median": 39.522,
+     "p95": 46.474,
+     "min": 35.987,
+     "max": 46.474
+    },
+    "lines": {
+     "median": 1330075,
+     "p95": 1330075,
+     "min": 1330075,
+     "max": 1330075
+    },
+    "open_call_ms": {
+     "median": 170.478,
+     "p95": 180.146,
+     "min": 166.637,
+     "max": 180.146
+    },
+    "peak_rss_mib": {
+     "median": 379.03125,
+     "p95": 381.19921875,
+     "min": 378.73046875,
+     "max": 381.19921875
+    },
+    "shown_ms": {
+     "median": 195.129,
+     "p95": 205.511,
+     "min": 191.529,
+     "max": 205.511
+    },
+    "total_ms": {
+     "median": 300.387,
+     "p95": 310.686,
+     "min": 289.464,
+     "max": 310.686
+    },
+    "find_regex_truncated": false,
+    "find_truncated": false,
+    "scenario": "find",
+    "viewer": "editor"
+   },
+   "runs": [
+    {
+     "scenario": "find",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 169.712,
+     "shown_ms": 194.92,
+     "chars": 104857598,
+     "lines": 1330075,
+     "find_ms": 46.213,
+     "find_matches": 32441,
+     "find_truncated": false,
+     "find_regex_ms": 39.522,
+     "find_regex_matches": 32441,
+     "find_regex_truncated": false,
+     "total_ms": 304.258,
+     "peak_rss_mib": 379.0390625
+    },
+    {
+     "scenario": "find",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 180.146,
+     "shown_ms": 205.511,
+     "chars": 104857598,
+     "lines": 1330075,
+     "find_ms": 41.8,
+     "find_matches": 32441,
+     "find_truncated": false,
+     "find_regex_ms": 43.899,
+     "find_regex_matches": 32441,
+     "find_regex_truncated": false,
+     "total_ms": 310.686,
+     "peak_rss_mib": 381.19921875
+    },
+    {
+     "scenario": "find",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 171.403,
+     "shown_ms": 196.593,
+     "chars": 104857598,
+     "lines": 1330075,
+     "find_ms": 37.901,
+     "find_matches": 32441,
+     "find_truncated": false,
+     "find_regex_ms": 46.474,
+     "find_regex_matches": 32441,
+     "find_regex_truncated": false,
+     "total_ms": 300.387,
+     "peak_rss_mib": 379.03125
+    },
+    {
+     "scenario": "find",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 170.478,
+     "shown_ms": 195.129,
+     "chars": 104857598,
+     "lines": 1330075,
+     "find_ms": 40.249,
+     "find_matches": 32441,
+     "find_truncated": false,
+     "find_regex_ms": 37.732,
+     "find_regex_matches": 32441,
+     "find_regex_truncated": false,
+     "total_ms": 292.538,
+     "peak_rss_mib": 378.8671875
+    },
+    {
+     "scenario": "find",
+     "bytes": 104857598,
+     "viewer": "editor",
+     "open_call_ms": 166.637,
+     "shown_ms": 191.529,
+     "chars": 104857598,
+     "lines": 1330075,
+     "find_ms": 36.894,
+     "find_matches": 32441,
+     "find_truncated": false,
+     "find_regex_ms": 35.987,
+     "find_regex_matches": 32441,
+     "find_regex_truncated": false,
+     "total_ms": 289.464,
+     "peak_rss_mib": 378.73046875
+    }
+   ]
+  },
+  "type-50mb": {
+   "scenario": "type",
+   "file_bytes": 52428788,
+   "env": {
+    "STEPS": "200"
+   },
+   "summary": {
+    "bytes": {
+     "median": 52428788,
+     "p95": 52428788,
+     "min": 52428788,
+     "max": 52428788
+    },
+    "chars": {
+     "median": 52428788,
+     "p95": 52428788,
+     "min": 52428788,
+     "max": 52428788
+    },
+    "frame_ms_max": {
+     "median": 5.177,
+     "p95": 5.433,
+     "min": 4.786,
+     "max": 5.433
+    },
+    "frame_ms_p50": {
+     "median": 3.884,
+     "p95": 3.918,
+     "min": 3.867,
+     "max": 3.918
+    },
+    "frame_ms_p95": {
+     "median": 4.514,
+     "p95": 4.794,
+     "min": 4.499,
+     "max": 4.794
+    },
+    "inserted": {
+     "median": 0,
+     "p95": 0,
+     "min": 0,
+     "max": 0
+    },
+    "lines": {
+     "median": 665038,
+     "p95": 665038,
+     "min": 665038,
+     "max": 665038
+    },
+    "open_call_ms": {
+     "median": 85.439,
+     "p95": 87.439,
+     "min": 84.261,
+     "max": 87.439
+    },
+    "peak_rss_mib": {
+     "median": 259.69921875,
+     "p95": 259.78515625,
+     "min": 259.42578125,
+     "max": 259.78515625
+    },
+    "shown_ms": {
+     "median": 108.588,
+     "p95": 110.356,
+     "min": 106.677,
+     "max": 110.356
+    },
+    "steps": {
+     "median": 200,
+     "p95": 200,
+     "min": 200,
+     "max": 200
+    },
+    "total_ms": {
+     "median": 985.303,
+     "p95": 992.409,
+     "min": 979.479,
+     "max": 992.409
+    },
+    "ui_ms_max": {
+     "median": 0.411,
+     "p95": 0.501,
+     "min": 0.399,
+     "max": 0.501
+    },
+    "ui_ms_p50": {
+     "median": 0.094,
+     "p95": 0.098,
+     "min": 0.092,
+     "max": 0.098
+    },
+    "ui_ms_p95": {
+     "median": 0.374,
+     "p95": 0.383,
+     "min": 0.366,
+     "max": 0.383
+    },
+    "scenario": "type",
+    "viewer": "editor"
+   },
+   "runs": [
+    {
+     "scenario": "type",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 84.81,
+     "shown_ms": 106.677,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.093,
+     "ui_ms_p95": 0.374,
+     "ui_ms_max": 0.399,
+     "frame_ms_p50": 3.918,
+     "frame_ms_p95": 4.499,
+     "frame_ms_max": 5.177,
+     "inserted": 0,
+     "total_ms": 985.303,
+     "peak_rss_mib": 259.78515625
+    },
+    {
+     "scenario": "type",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 87.439,
+     "shown_ms": 110.356,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.098,
+     "ui_ms_p95": 0.37,
+     "ui_ms_max": 0.405,
+     "frame_ms_p50": 3.884,
+     "frame_ms_p95": 4.568,
+     "frame_ms_max": 5.433,
+     "inserted": 0,
+     "total_ms": 980.175,
+     "peak_rss_mib": 259.42578125
+    },
+    {
+     "scenario": "type",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 85.439,
+     "shown_ms": 108.588,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.092,
+     "ui_ms_p95": 0.377,
+     "ui_ms_max": 0.501,
+     "frame_ms_p50": 3.88,
+     "frame_ms_p95": 4.514,
+     "frame_ms_max": 4.786,
+     "inserted": 0,
+     "total_ms": 979.479,
+     "peak_rss_mib": 259.48046875
+    },
+    {
+     "scenario": "type",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 87.155,
+     "shown_ms": 109.997,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.094,
+     "ui_ms_p95": 0.383,
+     "ui_ms_max": 0.479,
+     "frame_ms_p50": 3.867,
+     "frame_ms_p95": 4.794,
+     "frame_ms_max": 5.326,
+     "inserted": 0,
+     "total_ms": 992.409,
+     "peak_rss_mib": 259.69921875
+    },
+    {
+     "scenario": "type",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 84.261,
+     "shown_ms": 107.319,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.095,
+     "ui_ms_p95": 0.366,
+     "ui_ms_max": 0.411,
+     "frame_ms_p50": 3.9,
+     "frame_ms_p95": 4.499,
+     "frame_ms_max": 4.795,
+     "inserted": 0,
+     "total_ms": 989.234,
+     "peak_rss_mib": 259.71875
+    }
+   ]
+  },
+  "scroll-50mb": {
+   "scenario": "scroll",
+   "file_bytes": 52428788,
+   "env": {
+    "STEPS": "200"
+   },
+   "summary": {
+    "bytes": {
+     "median": 52428788,
+     "p95": 52428788,
+     "min": 52428788,
+     "max": 52428788
+    },
+    "chars": {
+     "median": 52428788,
+     "p95": 52428788,
+     "min": 52428788,
+     "max": 52428788
+    },
+    "frame_ms_max": {
+     "median": 4.358,
+     "p95": 4.855,
+     "min": 4.337,
+     "max": 4.855
+    },
+    "frame_ms_p50": {
+     "median": 3.657,
+     "p95": 3.67,
+     "min": 3.633,
+     "max": 3.67
+    },
+    "frame_ms_p95": {
+     "median": 4.293,
+     "p95": 4.315,
+     "min": 4.263,
+     "max": 4.315
+    },
+    "lines": {
+     "median": 665038,
+     "p95": 665038,
+     "min": 665038,
+     "max": 665038
+    },
+    "lines_moved": {
+     "median": 0,
+     "p95": 0,
+     "min": 0,
+     "max": 0
+    },
+    "lines_per_step": {
+     "median": 40,
+     "p95": 40,
+     "min": 40,
+     "max": 40
+    },
+    "open_call_ms": {
+     "median": 83.49,
+     "p95": 84.54,
+     "min": 82.726,
+     "max": 84.54
+    },
+    "peak_rss_mib": {
+     "median": 259.69921875,
+     "p95": 259.7421875,
+     "min": 259.4453125,
+     "max": 259.7421875
+    },
+    "shown_ms": {
+     "median": 105.465,
+     "p95": 107.153,
+     "min": 102.741,
+     "max": 107.153
+    },
+    "steps": {
+     "median": 200,
+     "p95": 200,
+     "min": 200,
+     "max": 200
+    },
+    "total_ms": {
+     "median": 935.013,
+     "p95": 942.729,
+     "min": 927.43,
+     "max": 942.729
+    },
+    "ui_ms_max": {
+     "median": 0.127,
+     "p95": 0.241,
+     "min": 0.106,
+     "max": 0.241
+    },
+    "ui_ms_p50": {
+     "median": 0.086,
+     "p95": 0.088,
+     "min": 0.086,
+     "max": 0.088
+    },
+    "ui_ms_p95": {
+     "median": 0.096,
+     "p95": 0.1,
+     "min": 0.095,
+     "max": 0.1
+    },
+    "scenario": "scroll",
+    "viewer": "editor"
+   },
+   "runs": [
+    {
+     "scenario": "scroll",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 82.726,
+     "shown_ms": 105.296,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.086,
+     "ui_ms_p95": 0.096,
+     "ui_ms_max": 0.127,
+     "frame_ms_p50": 3.668,
+     "frame_ms_p95": 4.263,
+     "frame_ms_max": 4.337,
+     "lines_per_step": 40,
+     "lines_moved": 0,
+     "total_ms": 927.43,
+     "peak_rss_mib": 259.69921875
+    },
+    {
+     "scenario": "scroll",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 84.54,
+     "shown_ms": 107.153,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.086,
+     "ui_ms_p95": 0.095,
+     "ui_ms_max": 0.106,
+     "frame_ms_p50": 3.633,
+     "frame_ms_p95": 4.289,
+     "frame_ms_max": 4.358,
+     "lines_per_step": 40,
+     "lines_moved": 0,
+     "total_ms": 941.547,
+     "peak_rss_mib": 259.4453125
+    },
+    {
+     "scenario": "scroll",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 83.994,
+     "shown_ms": 105.465,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.088,
+     "ui_ms_p95": 0.1,
+     "ui_ms_max": 0.241,
+     "frame_ms_p50": 3.657,
+     "frame_ms_p95": 4.315,
+     "frame_ms_max": 4.855,
+     "lines_per_step": 40,
+     "lines_moved": 0,
+     "total_ms": 935.013,
+     "peak_rss_mib": 259.46484375
+    },
+    {
+     "scenario": "scroll",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 83.458,
+     "shown_ms": 102.741,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.086,
+     "ui_ms_p95": 0.096,
+     "ui_ms_max": 0.128,
+     "frame_ms_p50": 3.653,
+     "frame_ms_p95": 4.293,
+     "frame_ms_max": 4.344,
+     "lines_per_step": 40,
+     "lines_moved": 0,
+     "total_ms": 932.738,
+     "peak_rss_mib": 259.7421875
+    },
+    {
+     "scenario": "scroll",
+     "bytes": 52428788,
+     "viewer": "editor",
+     "open_call_ms": 83.49,
+     "shown_ms": 105.951,
+     "chars": 52428788,
+     "lines": 665038,
+     "steps": 200,
+     "ui_ms_p50": 0.088,
+     "ui_ms_p95": 0.098,
+     "ui_ms_max": 0.112,
+     "frame_ms_p50": 3.67,
+     "frame_ms_p95": 4.311,
+     "frame_ms_max": 4.363,
+     "lines_per_step": 40,
+     "lines_moved": 0,
+     "total_ms": 942.729,
+     "peak_rss_mib": 259.703125
+    }
+   ]
+  }
+ }
+}

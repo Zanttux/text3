@@ -15,6 +15,9 @@ All notable changes are listed here. Versions follow Semantic Versioning.
   through its own UI code (`TEXT3_BENCH`), with peak memory per
   workload. Results in docs/PERFORMANCE.md ("Large files"); CI runs a
   smaller set on Linux, Windows and macOS against `bench/budgets.json`.
+- Large-file workloads measured on Ubuntu 24.04 ARM64 in a UTM virtual
+  machine too, with a per-system table in docs/PERFORMANCE.md; the VM
+  setup is in docs/TESTING.md (#206).
 
 ### Changed
 - README and website screenshots retaken from a Text³ build; they no

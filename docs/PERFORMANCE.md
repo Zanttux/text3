@@ -45,6 +45,17 @@ Measured on commit 0444bfd plus the perf/workloads branch (benchmark driver and 
 
 CI runs a smaller set (`--quick`: 200 MB log, 50 MB find, 100 typed characters and scroll steps, 3 runs) on Linux under Xvfb, Windows and macOS, and fails when a median exceeds `bench/budgets.json`. Hosted runners paint in software, so their *on screen* times are not comparable with these. On the Windows runner (Direct3D's software adapter, about 200 ms per frame) the end of a find or filter is noticed a frame later, so it has its own looser limits (`workloads_by_os`).
 
+### Per system
+
+The same full set on each system, medians in ms (memory in MiB).
+
+| System | Open 100 MB | Log 1 GiB indexed / filtered | Find 100 MB | Typing app p95 | Peak memory, open 100 MB |
+|---|---|---|---|---|---|
+| Ubuntu 24.04 ARM64 in a UTM virtual machine (QEMU with Apple Hypervisor), 4 virtual cores, 8 GB, on the Apple M5 above; painting in software under Xvfb (Mesa) (commit `c97bee1`) | 201 | 446 / 973 | 40 | 0.4 | 367 |
+| Apple M5, 24 GB, macOS-27.2.1 (commit `0444bfd`) | 192 | 413 / 967 | 60 | 5.3 | 420 |
+
+Results: `bench/results/*-workloads-*.json`. The virtual machines are set up as in docs/TESTING.md ("Virtual machines").
+
 ## Over time
 
 Text³'s own start-up and memory per change are in docs/BENCHMARKS.md
@@ -58,5 +69,5 @@ results file here, so the history accumulates with the code.
   throwaway CI runners, so no third-party program is installed on a
   developer's own machine.
 - Large files, typing latency and search speed in other editors (Text³'s
-  own are above), and the large-file workloads on Windows and Linux
-  hardware outside CI.
+  own are above), and the large-file workloads on Windows outside CI
+  (a Windows 11 virtual machine is being set up).

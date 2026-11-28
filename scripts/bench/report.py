@@ -52,6 +52,44 @@ def bar_chart(title, unit, rows, path, log=False):
     path.write_text("\n".join(out) + "\n", encoding="utf-8")
 
 
+def other_systems(loads):
+    """One row per system: the latest full workloads run of each."""
+    latest = {}
+    for w in loads:
+        latest[w["machine"].get("os", "?").split("-")[0]] = w
+    if len(latest) < 2:
+        return []
+
+    def med(w, name, key):
+        v = w["workloads"].get(name, {}).get("summary", {}).get(key)
+        if not isinstance(v, dict):
+            return "–"
+        return f"{v['median']:,.0f}" if v["median"] >= 10 else f"{v['median']:.1f}"
+
+    out = [
+        "### Per system",
+        "",
+        "The same full set on each system, medians in ms (memory in MiB).",
+        "",
+        "| System | Open 100 MB | Log 1 GiB indexed / filtered | Find 100 MB | Typing app p95 | Peak memory, open 100 MB |",
+        "|---|---|---|---|---|---|",
+    ]
+    for name, w in sorted(latest.items()):
+        m = w["machine"]
+        desc = m.get("note") or (
+            f"{m['cpu']}, {int(m.get('ram_bytes', 0)) // 2**30} GB, {m.get('os', name).split('-arm64')[0]}"
+            if m.get("cpu") else m.get("os", name)
+        )
+        out.append(
+            f"| {desc} (commit `{m.get('commit', '?')}`) | {med(w, 'open-100mb', 'shown_ms')} "
+            f"| {med(w, 'log-1gb', 'indexed_ms')} / {med(w, 'log-1gb', 'filter_ms')} "
+            f"| {med(w, 'find-100mb', 'find_ms')} | {med(w, 'type-50mb', 'ui_ms_p95')} "
+            f"| {med(w, 'open-100mb', 'peak_rss_mib')} |"
+        )
+    out += ["", "Results: `bench/results/*-workloads-*.json`. The virtual machines are set up as in docs/TESTING.md (\"Virtual machines\").", ""]
+    return out
+
+
 def large_files(w):
     """The "Large files" section from a workloads.py results file."""
     m = w["machine"]
@@ -208,8 +246,10 @@ def main():
                   CHARTS / "compare-memory.svg", log=True)
     loads = [json.loads(f.read_text(encoding="utf-8")) for f in files]
     loads = [w for w in loads if w.get("kind") == "workloads" and w.get("set") == "full"]
-    if loads:
-        md += large_files(loads[-1])
+    mac = [w for w in loads if w["machine"].get("os", "").startswith("macOS")]
+    if mac:
+        md += large_files(mac[-1])
+    md += other_systems(loads)
     md += [
         "## Over time",
         "",
@@ -224,8 +264,8 @@ def main():
         "  throwaway CI runners, so no third-party program is installed on a",
         "  developer's own machine.",
         "- Large files, typing latency and search speed in other editors (Text³'s",
-        "  own are above), and the large-file workloads on Windows and Linux",
-        "  hardware outside CI.",
+        "  own are above), and the large-file workloads on Windows outside CI",
+        "  (a Windows 11 virtual machine is being set up).",
         "",
     ]
     OUT.write_text("\n".join(md), encoding="utf-8")
