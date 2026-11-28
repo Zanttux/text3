@@ -51,7 +51,7 @@
     }
   },
   "workloads_by_os": {
-    "_comment": "Replaces single limits above on one platform. GitHub's Windows runners paint with Direct3D's software adapter (WARP) at about 200 ms per frame, and finishing a find or log filter is noticed on the next frame, so those times are frame-bound there; their CPU is also about 3x slower than an M5 (typing app time 15 ms). About 3x the Windows CI medians of 2026-11-28 (PR #208).",
+    "_comment": "Replaces single limits above on one platform. GitHub's Windows runners paint with Direct3D's software adapter (WARP) at about 200 ms per frame, and finishing a find or log filter is noticed on the next frame, so those times are frame-bound there; their CPU is also about 3x slower than an M5 (typing app time 15 ms). About 3x the Windows CI medians of 2026-11-28 (PR #208). macOS: GitHub's macOS runners are shared virtual machines whose times vary about 2.5x between runs (open 100 MB: 257 to 640 ms), so their limits are about 2x the slowest of five CI runs of 2026-11-28 (#206); the M5 numbers in docs/PERFORMANCE.md are far below.",
     "windows": {
       "log-200mb": {
         "indexed_ms": 1500,
@@ -68,6 +68,30 @@
       },
       "scroll-50mb": {
         "frame_ms_p95": 600
+      }
+    },
+    "macos": {
+      "open-10mb": {
+        "shown_ms": 550
+      },
+      "open-100mb": {
+        "shown_ms": 1300
+      },
+      "log-200mb": {
+        "indexed_ms": 700,
+        "filter_ms": 1800,
+        "regex_ms": 1800
+      },
+      "find-50mb": {
+        "find_ms": 450,
+        "find_regex_ms": 450
+      },
+      "type-50mb": {
+        "ui_ms_p95": 30,
+        "frame_ms_p95": 150
+      },
+      "scroll-50mb": {
+        "frame_ms_p95": 150
       }
     }
   }
