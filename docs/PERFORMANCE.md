@@ -25,6 +25,26 @@ Not measured on this machine (not installed): Sublime Text, Zed, BBEdit.
 
 Machine load average at the end of the run: 6.4. Window time is not the same as the file's text being drawn: it is the one point that can be measured the same way for every app. TextEdit is part of macOS, so its libraries are already loaded and shared, which keeps its size and memory small.
 
+## Large files (2026-11-28)
+
+Apple M5, 24 GB, macOS-27.2.1-arm64-arm-64bit-Mach-O. Commit `0444bfd`. Method: `scripts/bench/workloads.py` (#206): the release build runs each workload itself, through the window's own code (File › Open, File › Open Log, the find bar, the log viewer's filter field, text and key events delivered to the editor as keyboard input), after its first frame is on screen, then writes the times and exits (`TEXT3_BENCH`, crates/text3-app/src/benchprobe.rs). 5 runs per workload, a fresh scratch profile each run, medians shown. Files are generated ASCII log lines (fixed generator, about 79 bytes per line). *Shown* is from the open command to the start of the frame after the first one showing the file, i.e. until that frame is on screen. Peak memory is the largest resident size of the whole process (start-up included), from the operating system.
+
+| Workload | Result | Peak memory |
+|---|---|---|
+| Open 10 MB (editor tab) | shown 59 ms | 139 MiB |
+| Open 100 MB (editor tab) | shown 192 ms | 420 MiB |
+| Open 300 MB (from 256 MB: log viewer) | shown 38 ms, indexed 145 ms | 172 MiB |
+| Log viewer, 1 GiB (13,619,950 lines) | indexed 413 ms; filter `ERROR` 967 ms (256,981 lines); regex 967 ms (25,070 lines) | 276 MiB |
+| Find in 100 MB: count every `timeout` | 60 ms (32,441 matches); regex 53 ms | 627 MiB |
+| Typing into the middle of 50 MB, one character per frame | app 4.2 ms / p95 5.3 ms; on screen 17 ms / p95 17 ms | 371 MiB |
+| Scrolling 50 MB, one screen (40 lines) per frame | app 0.4 ms / p95 0.4 ms; on screen 17 ms / p95 17 ms | 269 MiB |
+
+Typing and scrolling: *app* is the time from the frame's input to the end of Text³'s own work for that frame (before painting); *on screen* is from one frame's input to the next frame's, which includes painting and waiting for the display (60 Hz here, so 16.7 ms is the floor). Per-frame median and p95 within a run, then the median over runs. Scrolling moves the caret down 40 lines per frame with the Down key (the editor has no Page Down yet).
+
+Measured on commit 0444bfd plus the perf/workloads branch (benchmark driver and the faster line-ending check). type-50mb with 0444bfd's line-ending check, same machine, 5 runs: ui_ms_p95 median 29.7 ms, frame_ms_p95 30.2 ms, peak RSS 422 MiB.
+
+CI runs a smaller set (`--quick`: 200 MB log, 50 MB find, 100 typed characters and scroll steps, 3 runs) on Linux under Xvfb, Windows and macOS, and fails when a median exceeds `bench/budgets.json`. Hosted runners paint in software, so their *on screen* times are not comparable with these. On the Windows runner (Direct3D's software adapter, about 200 ms per frame) the end of a find or filter is noticed a frame later, so it has its own looser limits (`workloads_by_os`).
+
 ## Over time
 
 Text³'s own start-up and memory per change are in docs/BENCHMARKS.md
@@ -37,4 +57,6 @@ results file here, so the history accumulates with the code.
 - Windows (Notepad++, Sublime Text, VS Code) and Linux: planned on
   throwaway CI runners, so no third-party program is installed on a
   developer's own machine.
-- Large files (100 MB), typing latency and search speed across editors.
+- Large files, typing latency and search speed in other editors (Text³'s
+  own are above), and the large-file workloads on Windows and Linux
+  hardware outside CI.

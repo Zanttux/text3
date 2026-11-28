@@ -55,6 +55,13 @@ impl LineEnding {
                 }
                 pending_cr = false;
             }
+            // Most chunks hold no '\r', so only '\n' can be in them: two
+            // memchr scans instead of a byte loop (the status bar asks
+            // after every keystroke, #206).
+            if !bytes[i..].contains(&b'\r') {
+                lf = lf || bytes[i..].contains(&b'\n');
+                i = bytes.len();
+            }
             while i < bytes.len() {
                 match bytes[i] {
                     b'\r' if i + 1 == bytes.len() => pending_cr = true,
@@ -280,6 +287,21 @@ mod tests {
                 let (a, b) = text.split_at(k);
                 assert_eq!(LineEnding::detect_chunks([a, b]), whole, "{text:?} at {k}");
             }
+        }
+        // Three chunks, each style alone or after the others.
+        for (a, b, c, want) in [
+            ("x\ny\n", "z\n", "w", LineEnding::Lf),
+            ("x\ny\n", "z", "w\r", LineEnding::Mixed),
+            ("x\r", "\ny", "z\r\n", LineEnding::CrLf),
+            ("x\r", "\ny", "z\n", LineEnding::Mixed),
+            ("x\r", "y", "z", LineEnding::Cr),
+            ("xy", "z", "", LineEnding::None),
+        ] {
+            assert_eq!(
+                LineEnding::detect_chunks([a, b, c]),
+                want,
+                "{a:?} {b:?} {c:?}"
+            );
         }
         assert_eq!(LineEnding::detect("a\r\nb\r\n"), LineEnding::CrLf);
         assert_eq!(LineEnding::detect("a\r"), LineEnding::Cr);

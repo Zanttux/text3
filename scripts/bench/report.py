@@ -52,6 +52,94 @@ def bar_chart(title, unit, rows, path, log=False):
     path.write_text("\n".join(out) + "\n", encoding="utf-8")
 
 
+def large_files(w):
+    """The "Large files" section from a workloads.py results file."""
+    m = w["machine"]
+    loads = w["workloads"]
+
+    def med(name, key):
+        v = loads.get(name, {}).get("summary", {}).get(key)
+        return v["median"] if isinstance(v, dict) else None
+
+    def ms(name, key):
+        v = med(name, key)
+        return "–" if v is None else (f"{v:,.0f} ms" if v >= 10 else f"{v:.1f} ms")
+
+    def mib(name):
+        v = med(name, "peak_rss_mib")
+        return "–" if v is None else f"{v:,.0f} MiB"
+
+    def count(name, key):
+        v = med(name, key)
+        return "–" if v is None else f"{v:,.0f}"
+
+    def query(name):
+        return loads.get(name, {}).get("env", {}).get("QUERY", "")
+
+    ram = int(m.get("ram_bytes", 0)) // 2**30
+    out = [
+        f"## Large files ({w['date']})",
+        "",
+        f"{m.get('cpu', m['machine'])}, {ram} GB, {m['os']}. Commit "
+        f"`{m.get('commit', '?')}`. Method: `{w['method']}` (#206): the release build "
+        "runs each workload itself, through the window's own code (File › Open, "
+        "File › Open Log, the find bar, the log viewer's filter field, text and "
+        "key events delivered to the editor as keyboard input), after its first "
+        "frame is on screen, then writes the times and exits "
+        "(`TEXT3_BENCH`, crates/text3-app/src/benchprobe.rs). "
+        f"{w['runs']} runs per workload, a fresh scratch profile each run, medians "
+        "shown. Files are generated ASCII log lines (fixed generator, about 79 bytes "
+        "per line). *Shown* is from the open command to the start of the frame after "
+        "the first one showing the file, i.e. until that frame is on screen. Peak "
+        "memory is the largest resident size of the whole process (start-up "
+        "included), from the operating system.",
+        "",
+        "| Workload | Result | Peak memory |",
+        "|---|---|---|",
+        f"| Open 10 MB (editor tab) | shown {ms('open-10mb', 'shown_ms')} | {mib('open-10mb')} |",
+        f"| Open 100 MB (editor tab) | shown {ms('open-100mb', 'shown_ms')} | {mib('open-100mb')} |",
+        f"| Open 300 MB (from 256 MB: log viewer) | shown {ms('open-300mb', 'shown_ms')}, "
+        f"indexed {ms('open-300mb', 'indexed_ms')} | {mib('open-300mb')} |",
+        f"| Log viewer, 1 GiB ({count('log-1gb', 'lines')} lines) | indexed "
+        f"{ms('log-1gb', 'indexed_ms')}; filter `{query('log-1gb')}` "
+        f"{ms('log-1gb', 'filter_ms')} ({count('log-1gb', 'filter_matches')} lines); regex "
+        f"{ms('log-1gb', 'regex_ms')} ({count('log-1gb', 'regex_matches')} lines) "
+        f"| {mib('log-1gb')} |",
+        f"| Find in 100 MB: count every `{query('find-100mb')}` | "
+        f"{ms('find-100mb', 'find_ms')} ({count('find-100mb', 'find_matches')} matches); "
+        f"regex {ms('find-100mb', 'find_regex_ms')} | {mib('find-100mb')} |",
+        f"| Typing into the middle of 50 MB, one character per frame | app "
+        f"{ms('type-50mb', 'ui_ms_p50')} / p95 {ms('type-50mb', 'ui_ms_p95')}; on screen "
+        f"{ms('type-50mb', 'frame_ms_p50')} / p95 {ms('type-50mb', 'frame_ms_p95')} "
+        f"| {mib('type-50mb')} |",
+        f"| Scrolling 50 MB, one screen (40 lines) per frame | app "
+        f"{ms('scroll-50mb', 'ui_ms_p50')} / p95 {ms('scroll-50mb', 'ui_ms_p95')}; on screen "
+        f"{ms('scroll-50mb', 'frame_ms_p50')} / p95 {ms('scroll-50mb', 'frame_ms_p95')} "
+        f"| {mib('scroll-50mb')} |",
+        "",
+        "Typing and scrolling: *app* is the time from the frame's input to the end "
+        "of Text³'s own work for that frame (before painting); *on screen* is from "
+        "one frame's input to the next frame's, which includes painting and waiting "
+        "for the display (60 Hz here, so 16.7 ms is the floor). Per-frame median and "
+        "p95 within a run, then the median over runs. Scrolling moves the caret down "
+        "40 lines per frame with the Down key (the editor has no Page Down yet).",
+        "",
+    ]
+    if w.get("note"):
+        out += [w["note"], ""]
+    out += [
+        "CI runs a smaller set (`--quick`: 200 MB log, 50 MB find, 100 typed "
+        "characters and scroll steps, 3 runs) on Linux under Xvfb, Windows and "
+        "macOS, and fails when a median exceeds `bench/budgets.json`. Hosted "
+        "runners paint in software, so their *on screen* times are not comparable "
+        "with these. On the Windows runner (Direct3D's software adapter, about "
+        "200 ms per frame) the end of a find or filter is noticed a frame later, "
+        "so it has its own looser limits (`workloads_by_os`).",
+        "",
+    ]
+    return out
+
+
 def main():
     files = sorted(RESULTS.glob("*.json"))
     compares = [json.loads(f.read_text(encoding="utf-8")) for f in files]
@@ -118,6 +206,10 @@ def main():
         bar_chart("Memory after opening a 4 KB file (median)", "MiB",
                   [(n, apps[n]["idle_rss_mib"]["median"], n == "Text³") for n in mem_order],
                   CHARTS / "compare-memory.svg", log=True)
+    loads = [json.loads(f.read_text(encoding="utf-8")) for f in files]
+    loads = [w for w in loads if w.get("kind") == "workloads" and w.get("set") == "full"]
+    if loads:
+        md += large_files(loads[-1])
     md += [
         "## Over time",
         "",
@@ -131,7 +223,9 @@ def main():
         "- Windows (Notepad++, Sublime Text, VS Code) and Linux: planned on",
         "  throwaway CI runners, so no third-party program is installed on a",
         "  developer's own machine.",
-        "- Large files (100 MB), typing latency and search speed across editors.",
+        "- Large files, typing latency and search speed in other editors (Text³'s",
+        "  own are above), and the large-file workloads on Windows and Linux",
+        "  hardware outside CI.",
         "",
     ]
     OUT.write_text("\n".join(md), encoding="utf-8")

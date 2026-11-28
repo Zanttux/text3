@@ -1,5 +1,74 @@
 {
   "_comment": "Download size budgets in bytes (docs/QUALITY_GATES.md G2, #179). Raising one needs a decision in the pull request. Sizes 2026-11-28: 10.8-15.4 MB.",
   "download_max_bytes": 18000000,
-  "unpacked_binary_max_bytes": 60000000
+  "unpacked_binary_max_bytes": 60000000,
+  "workloads": {
+    "_comment": "Large-file workloads (#206, scripts/bench/workloads.py --check). Each value bounds the median over the runs (ms or MiB; ui_ms_p95 and frame_ms_p95 are each run's per-frame p95). About 3x the Apple M5 medians of 2026-11-28 (bench/results/2026-11-28-workloads-macos.json), rounded up; per-frame app time at most one 60 Hz frame (16 ms); frame_ms includes painting, which CI runners do in software. CI runs the --quick set (log-200mb, find-50mb, 100 typed characters and scroll steps). Raising one needs a decision in the pull request.",
+    "open-10mb": {
+      "shown_ms": 250,
+      "peak_rss_mib": 420
+    },
+    "open-100mb": {
+      "shown_ms": 600,
+      "peak_rss_mib": 1270
+    },
+    "open-300mb": {
+      "shown_ms": 150,
+      "indexed_ms": 450,
+      "peak_rss_mib": 520
+    },
+    "log-200mb": {
+      "indexed_ms": 300,
+      "filter_ms": 700,
+      "regex_ms": 700,
+      "peak_rss_mib": 480
+    },
+    "log-1gb": {
+      "indexed_ms": 1300,
+      "filter_ms": 3000,
+      "regex_ms": 3000,
+      "peak_rss_mib": 830
+    },
+    "find-50mb": {
+      "find_ms": 110,
+      "find_regex_ms": 110,
+      "peak_rss_mib": 1110
+    },
+    "find-100mb": {
+      "find_ms": 160,
+      "find_regex_ms": 160,
+      "peak_rss_mib": 1900
+    },
+    "type-50mb": {
+      "ui_ms_p95": 16,
+      "frame_ms_p95": 100,
+      "peak_rss_mib": 1120
+    },
+    "scroll-50mb": {
+      "ui_ms_p95": 16,
+      "frame_ms_p95": 100,
+      "peak_rss_mib": 810
+    }
+  },
+  "workloads_by_os": {
+    "_comment": "Replaces single limits above on one platform. GitHub's Windows runners paint with Direct3D's software adapter (WARP) at about 200 ms per frame, and finishing a find or log filter is noticed on the next frame, so those times are frame-bound there; their CPU is also about 3x slower than an M5 (typing app time 15 ms). About 3x the Windows CI medians of 2026-11-28 (PR #208).",
+    "windows": {
+      "log-200mb": {
+        "indexed_ms": 1500,
+        "filter_ms": 2700,
+        "regex_ms": 2700
+      },
+      "find-50mb": {
+        "find_ms": 1100,
+        "find_regex_ms": 1100
+      },
+      "type-50mb": {
+        "ui_ms_p95": 45,
+        "frame_ms_p95": 650
+      },
+      "scroll-50mb": {
+        "frame_ms_p95": 600
+      }
+    }
+  }
 }

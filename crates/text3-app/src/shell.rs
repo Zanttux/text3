@@ -63,6 +63,7 @@ enum SettingsTab {
 /// Upper bound for Play Macro Multiple Times.
 const MACRO_TIMES_MAX: usize = 10_000;
 
+mod bench;
 mod default_apps;
 mod goto_anything;
 
@@ -387,6 +388,8 @@ pub struct Shell {
     /// (building it takes about 12 ms); until then no in-window menu bar.
     #[cfg(target_os = "macos")]
     menu_pending: bool,
+    /// `TEXT3_BENCH`: the workload being measured (shell/bench.rs).
+    bench: Option<bench::Driver>,
 }
 
 impl Shell {
@@ -592,6 +595,7 @@ impl Shell {
             native_menu: None,
             #[cfg(target_os = "macos")]
             menu_pending: false,
+            bench: text3_app::benchprobe::config().map(bench::Driver::new),
         };
         // Files that are not UTF-8/UTF-16 go to the encoding picker; other
         // failures are reported together.
@@ -6178,6 +6182,10 @@ impl eframe::App for Shell {
         if text3_app::startprobe::frame_start() {
             std::process::exit(0);
         }
+        // TEXT3_BENCH: the next step of the measured workload.
+        if self.bench.is_some() {
+            self.bench_frame_start(&ctx);
+        }
         // The first frame has been presented when the second one starts.
         #[cfg(target_os = "macos")]
         if self.menu_pending && ctx.cumulative_frame_nr() > 0 {
@@ -6526,6 +6534,15 @@ impl eframe::App for Shell {
             if text3_app::startprobe::frame_end(text_shown) {
                 ctx.request_repaint();
             }
+        }
+        if self.bench.is_some() {
+            self.bench_frame_end(&ctx);
+        }
+    }
+
+    fn raw_input_hook(&mut self, _ctx: &egui::Context, raw_input: &mut egui::RawInput) {
+        if self.bench.is_some() {
+            self.bench_input(raw_input);
         }
     }
 }

@@ -31,6 +31,17 @@ are cross-platform verification and release readiness.
   (#79).
 
 ## Done
+- Large-file workloads (#206): `TEXT3_BENCH` in-app driver
+  (`text3_app::benchprobe`, `shell/bench.rs`) and
+  `scripts/bench/workloads.py`; open 10/100/300 MB, 1 GB log index and
+  filter, find in 100 MB, typing and scrolling in 50 MB, peak RSS each.
+  Full results for macOS in bench/results and docs/PERFORMANCE.md; CI
+  job `workloads` checks bench/budgets.json on all three platforms.
+  Found and fixed: line-ending detection scanned the whole document per
+  keystroke (29 → 4 ms per keystroke at 50 MB). Seen, not fixed: the
+  editor has no Page Down/Page Up; find in a large file copies the whole
+  text (100 MB file: 627 MiB peak vs 420 MiB just open); log filtering
+  costs the same for plain text and regex (per-line decoding dominates).
 - Mac App Store preparation (#79, docs/APP_STORE.md): `store` feature,
   entitlements, `scripts/package-mas.sh`; Apple App ID
   `io.github.zanttux.text3`, distribution certificates, provisioning

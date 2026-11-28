@@ -4,6 +4,18 @@ All notable changes are listed here. Versions follow Semantic Versioning.
 
 ## [Unreleased]
 
+### Performance
+- Typing in a large file no longer rescans the whole text for its line
+  endings on every keystroke: per-keystroke work in a 50 MB file drops
+  from about 29 ms to 4 ms (Apple M5), so typing keeps up with a 60 Hz
+  display (#206).
+- Large-file workloads are measured (#206): `scripts/bench/workloads.py`
+  has the app itself open 10–300 MB files, index and filter a 1 GB log,
+  count matches in a 100 MB file, type into and scroll a 50 MB file
+  through its own UI code (`TEXT3_BENCH`), with peak memory per
+  workload. Results in docs/PERFORMANCE.md ("Large files"); CI runs a
+  smaller set on Linux, Windows and macOS against `bench/budgets.json`.
+
 ### Changed
 - README and website screenshots retaken from a Text³ build; they no
   longer show the old name. `scripts/screenshots/shoot.py` retakes them

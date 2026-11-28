@@ -1,0 +1,1083 @@
+{
+  "kind": "workloads",
+  "date": "2026-11-28",
+  "set": "full",
+  "runs": 5,
+  "method": "scripts/bench/workloads.py",
+  "machine": {
+    "os": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "python": "3.15.2",
+    "cpus": 10,
+    "cpu": "Apple M5",
+    "ram_bytes": "25769803776",
+    "commit": "0444bfd",
+    "load_average_start": [
+      6.2,
+      7.8,
+      7.0
+    ],
+    "load_average_end": [
+      5.6,
+      7.3,
+      6.9
+    ]
+  },
+  "binary_bytes": 46825008,
+  "workloads": {
+    "open-10mb": {
+      "scenario": "open",
+      "file_bytes": 10485703,
+      "env": {},
+      "summary": {
+        "bytes": {
+          "median": 10485703,
+          "p95": 10485703,
+          "min": 10485703,
+          "max": 10485703
+        },
+        "chars": {
+          "median": 10485703,
+          "p95": 10485703,
+          "min": 10485703,
+          "max": 10485703
+        },
+        "lines": {
+          "median": 133009,
+          "p95": 133009,
+          "min": 133009,
+          "max": 133009
+        },
+        "open_call_ms": {
+          "median": 23.736,
+          "p95": 27.511,
+          "min": 22.516,
+          "max": 27.511
+        },
+        "peak_rss_mib": {
+          "median": 138.6875,
+          "p95": 138.96875,
+          "min": 133.25,
+          "max": 138.96875
+        },
+        "shown_ms": {
+          "median": 58.931,
+          "p95": 72.596,
+          "min": 34.793,
+          "max": 72.596
+        },
+        "total_ms": {
+          "median": 83.792,
+          "p95": 97.601,
+          "min": 59.492,
+          "max": 97.601
+        },
+        "scenario": "open",
+        "viewer": "editor"
+      },
+      "runs": [
+        {
+          "scenario": "open",
+          "bytes": 10485703,
+          "viewer": "editor",
+          "open_call_ms": 27.511,
+          "shown_ms": 67.892,
+          "chars": 10485703,
+          "lines": 133009,
+          "total_ms": 91.088,
+          "peak_rss_mib": 138.96875
+        },
+        {
+          "scenario": "open",
+          "bytes": 10485703,
+          "viewer": "editor",
+          "open_call_ms": 22.516,
+          "shown_ms": 34.793,
+          "chars": 10485703,
+          "lines": 133009,
+          "total_ms": 60.609,
+          "peak_rss_mib": 133.25
+        },
+        {
+          "scenario": "open",
+          "bytes": 10485703,
+          "viewer": "editor",
+          "open_call_ms": 23.672,
+          "shown_ms": 58.931,
+          "chars": 10485703,
+          "lines": 133009,
+          "total_ms": 83.792,
+          "peak_rss_mib": 138.9375
+        },
+        {
+          "scenario": "open",
+          "bytes": 10485703,
+          "viewer": "editor",
+          "open_call_ms": 23.736,
+          "shown_ms": 34.891,
+          "chars": 10485703,
+          "lines": 133009,
+          "total_ms": 59.492,
+          "peak_rss_mib": 133.484375
+        },
+        {
+          "scenario": "open",
+          "bytes": 10485703,
+          "viewer": "editor",
+          "open_call_ms": 24.46,
+          "shown_ms": 72.596,
+          "chars": 10485703,
+          "lines": 133009,
+          "total_ms": 97.601,
+          "peak_rss_mib": 138.6875
+        }
+      ]
+    },
+    "open-100mb": {
+      "scenario": "open",
+      "file_bytes": 104857598,
+      "env": {},
+      "summary": {
+        "bytes": {
+          "median": 104857598,
+          "p95": 104857598,
+          "min": 104857598,
+          "max": 104857598
+        },
+        "chars": {
+          "median": 104857598,
+          "p95": 104857598,
+          "min": 104857598,
+          "max": 104857598
+        },
+        "lines": {
+          "median": 1330075,
+          "p95": 1330075,
+          "min": 1330075,
+          "max": 1330075
+        },
+        "open_call_ms": {
+          "median": 146.595,
+          "p95": 150.8,
+          "min": 143.733,
+          "max": 150.8
+        },
+        "peak_rss_mib": {
+          "median": 420.3125,
+          "p95": 420.9375,
+          "min": 414.875,
+          "max": 420.9375
+        },
+        "shown_ms": {
+          "median": 191.652,
+          "p95": 192.93,
+          "min": 161.532,
+          "max": 192.93
+        },
+        "total_ms": {
+          "median": 214.334,
+          "p95": 217.06,
+          "min": 186.876,
+          "max": 217.06
+        },
+        "scenario": "open",
+        "viewer": "editor"
+      },
+      "runs": [
+        {
+          "scenario": "open",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 150.8,
+          "shown_ms": 191.652,
+          "chars": 104857598,
+          "lines": 1330075,
+          "total_ms": 214.334,
+          "peak_rss_mib": 420.875
+        },
+        {
+          "scenario": "open",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 143.733,
+          "shown_ms": 162.635,
+          "chars": 104857598,
+          "lines": 1330075,
+          "total_ms": 186.876,
+          "peak_rss_mib": 414.875
+        },
+        {
+          "scenario": "open",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 146.595,
+          "shown_ms": 161.532,
+          "chars": 104857598,
+          "lines": 1330075,
+          "total_ms": 187.674,
+          "peak_rss_mib": 414.9375
+        },
+        {
+          "scenario": "open",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 144.826,
+          "shown_ms": 192.93,
+          "chars": 104857598,
+          "lines": 1330075,
+          "total_ms": 217.06,
+          "peak_rss_mib": 420.9375
+        },
+        {
+          "scenario": "open",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 146.965,
+          "shown_ms": 191.841,
+          "chars": 104857598,
+          "lines": 1330075,
+          "total_ms": 215.681,
+          "peak_rss_mib": 420.3125
+        }
+      ]
+    },
+    "open-300mb": {
+      "scenario": "open",
+      "file_bytes": 314572735,
+      "env": {},
+      "summary": {
+        "bytes": {
+          "median": 314572735,
+          "p95": 314572735,
+          "min": 314572735,
+          "max": 314572735
+        },
+        "indexed_ms": {
+          "median": 145.399,
+          "p95": 149.295,
+          "min": 144.24,
+          "max": 149.295
+        },
+        "lines": {
+          "median": 3990220,
+          "p95": 3990220,
+          "min": 3990220,
+          "max": 3990220
+        },
+        "open_call_ms": {
+          "median": 0.072,
+          "p95": 0.078,
+          "min": 0.069,
+          "max": 0.078
+        },
+        "peak_rss_mib": {
+          "median": 171.75,
+          "p95": 173.359375,
+          "min": 170.75,
+          "max": 173.359375
+        },
+        "shown_ms": {
+          "median": 37.558,
+          "p95": 40.145,
+          "min": 9.465,
+          "max": 40.145
+        },
+        "total_ms": {
+          "median": 170.454,
+          "p95": 175.013,
+          "min": 166.779,
+          "max": 175.013
+        },
+        "scenario": "open",
+        "viewer": "log"
+      },
+      "runs": [
+        {
+          "scenario": "open",
+          "bytes": 314572735,
+          "viewer": "log",
+          "open_call_ms": 0.073,
+          "shown_ms": 39.694,
+          "indexed_ms": 145.399,
+          "lines": 3990220,
+          "total_ms": 170.454,
+          "peak_rss_mib": 170.75
+        },
+        {
+          "scenario": "open",
+          "bytes": 314572735,
+          "viewer": "log",
+          "open_call_ms": 0.069,
+          "shown_ms": 37.45,
+          "indexed_ms": 149.295,
+          "lines": 3990220,
+          "total_ms": 175.013,
+          "peak_rss_mib": 173.046875
+        },
+        {
+          "scenario": "open",
+          "bytes": 314572735,
+          "viewer": "log",
+          "open_call_ms": 0.072,
+          "shown_ms": 9.465,
+          "indexed_ms": 144.24,
+          "lines": 3990220,
+          "total_ms": 166.779,
+          "peak_rss_mib": 173.359375
+        },
+        {
+          "scenario": "open",
+          "bytes": 314572735,
+          "viewer": "log",
+          "open_call_ms": 0.071,
+          "shown_ms": 40.145,
+          "indexed_ms": 148.756,
+          "lines": 3990220,
+          "total_ms": 172.998,
+          "peak_rss_mib": 170.84375
+        },
+        {
+          "scenario": "open",
+          "bytes": 314572735,
+          "viewer": "log",
+          "open_call_ms": 0.078,
+          "shown_ms": 37.558,
+          "indexed_ms": 144.252,
+          "lines": 3990220,
+          "total_ms": 168.108,
+          "peak_rss_mib": 171.75
+        }
+      ]
+    },
+    "log-1gb": {
+      "scenario": "log",
+      "file_bytes": 1073741806,
+      "env": {
+        "QUERY": "ERROR",
+        "REGEX": "ERROR .*id=\\d*7\\b"
+      },
+      "summary": {
+        "bytes": {
+          "median": 1073741806,
+          "p95": 1073741806,
+          "min": 1073741806,
+          "max": 1073741806
+        },
+        "filter_matches": {
+          "median": 256981,
+          "p95": 256981,
+          "min": 256981,
+          "max": 256981
+        },
+        "filter_ms": {
+          "median": 966.669,
+          "p95": 966.851,
+          "min": 966.478,
+          "max": 966.851
+        },
+        "indexed_ms": {
+          "median": 412.733,
+          "p95": 428.188,
+          "min": 408.041,
+          "max": 428.188
+        },
+        "lines": {
+          "median": 13619950,
+          "p95": 13619950,
+          "min": 13619950,
+          "max": 13619950
+        },
+        "open_call_ms": {
+          "median": 0.069,
+          "p95": 0.073,
+          "min": 0.065,
+          "max": 0.073
+        },
+        "peak_rss_mib": {
+          "median": 275.78125,
+          "p95": 276.828125,
+          "min": 274.4375,
+          "max": 276.828125
+        },
+        "regex_matches": {
+          "median": 25070,
+          "p95": 25070,
+          "min": 25070,
+          "max": 25070
+        },
+        "regex_ms": {
+          "median": 966.687,
+          "p95": 966.732,
+          "min": 966.508,
+          "max": 966.732
+        },
+        "shown_ms": {
+          "median": 39.234,
+          "p95": 40.713,
+          "min": 36.962,
+          "max": 40.713
+        },
+        "total_ms": {
+          "median": 2382.761,
+          "p95": 2385.638,
+          "min": 2368.397,
+          "max": 2385.638
+        },
+        "scenario": "log",
+        "viewer": "log"
+      },
+      "runs": [
+        {
+          "scenario": "log",
+          "bytes": 1073741806,
+          "viewer": "log",
+          "open_call_ms": 0.069,
+          "shown_ms": 39.234,
+          "indexed_ms": 412.733,
+          "lines": 13619950,
+          "filter_ms": 966.58,
+          "filter_matches": 256981,
+          "regex_ms": 966.704,
+          "regex_matches": 25070,
+          "total_ms": 2382.761,
+          "peak_rss_mib": 274.4375
+        },
+        {
+          "scenario": "log",
+          "bytes": 1073741806,
+          "viewer": "log",
+          "open_call_ms": 0.069,
+          "shown_ms": 40.713,
+          "indexed_ms": 412.594,
+          "lines": 13619950,
+          "filter_ms": 966.478,
+          "filter_matches": 256981,
+          "regex_ms": 966.687,
+          "regex_matches": 25070,
+          "total_ms": 2372.918,
+          "peak_rss_mib": 275.78125
+        },
+        {
+          "scenario": "log",
+          "bytes": 1073741806,
+          "viewer": "log",
+          "open_call_ms": 0.065,
+          "shown_ms": 36.962,
+          "indexed_ms": 408.041,
+          "lines": 13619950,
+          "filter_ms": 966.745,
+          "filter_matches": 256981,
+          "regex_ms": 966.508,
+          "regex_matches": 25070,
+          "total_ms": 2368.397,
+          "peak_rss_mib": 276.078125
+        },
+        {
+          "scenario": "log",
+          "bytes": 1073741806,
+          "viewer": "log",
+          "open_call_ms": 0.071,
+          "shown_ms": 38.279,
+          "indexed_ms": 428.188,
+          "lines": 13619950,
+          "filter_ms": 966.669,
+          "filter_matches": 256981,
+          "regex_ms": 966.732,
+          "regex_matches": 25070,
+          "total_ms": 2385.638,
+          "peak_rss_mib": 276.828125
+        },
+        {
+          "scenario": "log",
+          "bytes": 1073741806,
+          "viewer": "log",
+          "open_call_ms": 0.073,
+          "shown_ms": 39.624,
+          "indexed_ms": 419.296,
+          "lines": 13619950,
+          "filter_ms": 966.851,
+          "filter_matches": 256981,
+          "regex_ms": 966.564,
+          "regex_matches": 25070,
+          "total_ms": 2383.86,
+          "peak_rss_mib": 275.53125
+        }
+      ]
+    },
+    "find-100mb": {
+      "scenario": "find",
+      "file_bytes": 104857598,
+      "env": {
+        "QUERY": "timeout",
+        "REGEX": "time\\w*out after \\d+ ms"
+      },
+      "summary": {
+        "bytes": {
+          "median": 104857598,
+          "p95": 104857598,
+          "min": 104857598,
+          "max": 104857598
+        },
+        "chars": {
+          "median": 104857598,
+          "p95": 104857598,
+          "min": 104857598,
+          "max": 104857598
+        },
+        "find_matches": {
+          "median": 32441,
+          "p95": 32441,
+          "min": 32441,
+          "max": 32441
+        },
+        "find_ms": {
+          "median": 59.631,
+          "p95": 72.418,
+          "min": 50.764,
+          "max": 72.418
+        },
+        "find_regex_matches": {
+          "median": 32441,
+          "p95": 32441,
+          "min": 32441,
+          "max": 32441
+        },
+        "find_regex_ms": {
+          "median": 52.53,
+          "p95": 53.312,
+          "min": 50.063,
+          "max": 53.312
+        },
+        "lines": {
+          "median": 1330075,
+          "p95": 1330075,
+          "min": 1330075,
+          "max": 1330075
+        },
+        "open_call_ms": {
+          "median": 151.44,
+          "p95": 153.138,
+          "min": 149.616,
+          "max": 153.138
+        },
+        "peak_rss_mib": {
+          "median": 626.84375,
+          "p95": 629.046875,
+          "min": 626.75,
+          "max": 629.046875
+        },
+        "shown_ms": {
+          "median": 196.473,
+          "p95": 204.298,
+          "min": 189.464,
+          "max": 204.298
+        },
+        "total_ms": {
+          "median": 335.755,
+          "p95": 347.776,
+          "min": 323.281,
+          "max": 347.776
+        },
+        "find_regex_truncated": false,
+        "find_truncated": false,
+        "scenario": "find",
+        "viewer": "editor"
+      },
+      "runs": [
+        {
+          "scenario": "find",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 150.307,
+          "shown_ms": 192.617,
+          "chars": 104857598,
+          "lines": 1330075,
+          "find_ms": 69.309,
+          "find_matches": 32441,
+          "find_truncated": false,
+          "find_regex_ms": 50.063,
+          "find_regex_matches": 32441,
+          "find_regex_truncated": false,
+          "total_ms": 337.312,
+          "peak_rss_mib": 629.046875
+        },
+        {
+          "scenario": "find",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 149.616,
+          "shown_ms": 189.464,
+          "chars": 104857598,
+          "lines": 1330075,
+          "find_ms": 72.418,
+          "find_matches": 32441,
+          "find_truncated": false,
+          "find_regex_ms": 50.133,
+          "find_regex_matches": 32441,
+          "find_regex_truncated": false,
+          "total_ms": 335.755,
+          "peak_rss_mib": 626.890625
+        },
+        {
+          "scenario": "find",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 153.138,
+          "shown_ms": 204.298,
+          "chars": 104857598,
+          "lines": 1330075,
+          "find_ms": 59.631,
+          "find_matches": 32441,
+          "find_truncated": false,
+          "find_regex_ms": 53.312,
+          "find_regex_matches": 32441,
+          "find_regex_truncated": false,
+          "total_ms": 347.776,
+          "peak_rss_mib": 626.78125
+        },
+        {
+          "scenario": "find",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 151.647,
+          "shown_ms": 202.405,
+          "chars": 104857598,
+          "lines": 1330075,
+          "find_ms": 55.288,
+          "find_matches": 32441,
+          "find_truncated": false,
+          "find_regex_ms": 52.717,
+          "find_regex_matches": 32441,
+          "find_regex_truncated": false,
+          "total_ms": 334.226,
+          "peak_rss_mib": 626.84375
+        },
+        {
+          "scenario": "find",
+          "bytes": 104857598,
+          "viewer": "editor",
+          "open_call_ms": 151.44,
+          "shown_ms": 196.473,
+          "chars": 104857598,
+          "lines": 1330075,
+          "find_ms": 50.764,
+          "find_matches": 32441,
+          "find_truncated": false,
+          "find_regex_ms": 52.53,
+          "find_regex_matches": 32441,
+          "find_regex_truncated": false,
+          "total_ms": 323.281,
+          "peak_rss_mib": 626.75
+        }
+      ]
+    },
+    "type-50mb": {
+      "scenario": "type",
+      "file_bytes": 52428788,
+      "env": {
+        "STEPS": "200"
+      },
+      "summary": {
+        "bytes": {
+          "median": 52428788,
+          "p95": 52428788,
+          "min": 52428788,
+          "max": 52428788
+        },
+        "chars": {
+          "median": 52428788,
+          "p95": 52428788,
+          "min": 52428788,
+          "max": 52428788
+        },
+        "frame_ms_max": {
+          "median": 22.926,
+          "p95": 33.216,
+          "min": 19.871,
+          "max": 33.216
+        },
+        "frame_ms_p50": {
+          "median": 16.664,
+          "p95": 16.676,
+          "min": 16.655,
+          "max": 16.676
+        },
+        "frame_ms_p95": {
+          "median": 17.004,
+          "p95": 17.442,
+          "min": 16.989,
+          "max": 17.442
+        },
+        "inserted": {
+          "median": 200,
+          "p95": 200,
+          "min": 200,
+          "max": 200
+        },
+        "lines": {
+          "median": 665038,
+          "p95": 665038,
+          "min": 665038,
+          "max": 665038
+        },
+        "open_call_ms": {
+          "median": 80.539,
+          "p95": 87.09,
+          "min": 78.007,
+          "max": 87.09
+        },
+        "peak_rss_mib": {
+          "median": 371.234375,
+          "p95": 372.0,
+          "min": 370.8125,
+          "max": 372.0
+        },
+        "shown_ms": {
+          "median": 123.985,
+          "p95": 138.162,
+          "min": 95.034,
+          "max": 138.162
+        },
+        "steps": {
+          "median": 200,
+          "p95": 200,
+          "min": 200,
+          "max": 200
+        },
+        "total_ms": {
+          "median": 3569.414,
+          "p95": 3602.867,
+          "min": 3536.955,
+          "max": 3602.867
+        },
+        "ui_ms_max": {
+          "median": 6.037,
+          "p95": 6.509,
+          "min": 5.479,
+          "max": 6.509
+        },
+        "ui_ms_p50": {
+          "median": 4.228,
+          "p95": 4.324,
+          "min": 2.005,
+          "max": 4.324
+        },
+        "ui_ms_p95": {
+          "median": 5.326,
+          "p95": 5.407,
+          "min": 4.839,
+          "max": 5.407
+        },
+        "scenario": "type",
+        "viewer": "editor"
+      },
+      "runs": [
+        {
+          "scenario": "type",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 80.946,
+          "shown_ms": 95.034,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 4.205,
+          "ui_ms_p95": 4.896,
+          "ui_ms_max": 6.224,
+          "frame_ms_p50": 16.663,
+          "frame_ms_p95": 17.16,
+          "frame_ms_max": 21.47,
+          "inserted": 200,
+          "total_ms": 3536.955,
+          "peak_rss_mib": 372.0
+        },
+        {
+          "scenario": "type",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 87.09,
+          "shown_ms": 138.162,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 4.324,
+          "ui_ms_p95": 5.407,
+          "ui_ms_max": 6.037,
+          "frame_ms_p50": 16.676,
+          "frame_ms_p95": 17.442,
+          "frame_ms_max": 33.216,
+          "inserted": 200,
+          "total_ms": 3602.867,
+          "peak_rss_mib": 371.234375
+        },
+        {
+          "scenario": "type",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 80.539,
+          "shown_ms": 124.79,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 4.228,
+          "ui_ms_p95": 5.363,
+          "ui_ms_max": 5.72,
+          "frame_ms_p50": 16.655,
+          "frame_ms_p95": 17.004,
+          "frame_ms_max": 22.926,
+          "inserted": 200,
+          "total_ms": 3569.414,
+          "peak_rss_mib": 371.09375
+        },
+        {
+          "scenario": "type",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 79.812,
+          "shown_ms": 120.697,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 4.289,
+          "ui_ms_p95": 5.326,
+          "ui_ms_max": 6.509,
+          "frame_ms_p50": 16.667,
+          "frame_ms_p95": 16.99,
+          "frame_ms_max": 19.871,
+          "inserted": 200,
+          "total_ms": 3566.102,
+          "peak_rss_mib": 371.65625
+        },
+        {
+          "scenario": "type",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 78.007,
+          "shown_ms": 123.985,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 2.005,
+          "ui_ms_p95": 4.839,
+          "ui_ms_max": 5.479,
+          "frame_ms_p50": 16.664,
+          "frame_ms_p95": 16.989,
+          "frame_ms_max": 23.031,
+          "inserted": 200,
+          "total_ms": 3571.562,
+          "peak_rss_mib": 370.8125
+        }
+      ]
+    },
+    "scroll-50mb": {
+      "scenario": "scroll",
+      "file_bytes": 52428788,
+      "env": {
+        "STEPS": "200"
+      },
+      "summary": {
+        "bytes": {
+          "median": 52428788,
+          "p95": 52428788,
+          "min": 52428788,
+          "max": 52428788
+        },
+        "chars": {
+          "median": 52428788,
+          "p95": 52428788,
+          "min": 52428788,
+          "max": 52428788
+        },
+        "frame_ms_max": {
+          "median": 19.195,
+          "p95": 20.141,
+          "min": 18.775,
+          "max": 20.141
+        },
+        "frame_ms_p50": {
+          "median": 16.666,
+          "p95": 16.668,
+          "min": 16.652,
+          "max": 16.668
+        },
+        "frame_ms_p95": {
+          "median": 16.839,
+          "p95": 17.024,
+          "min": 16.83,
+          "max": 17.024
+        },
+        "lines": {
+          "median": 665038,
+          "p95": 665038,
+          "min": 665038,
+          "max": 665038
+        },
+        "lines_moved": {
+          "median": 8000,
+          "p95": 8000,
+          "min": 8000,
+          "max": 8000
+        },
+        "lines_per_step": {
+          "median": 40,
+          "p95": 40,
+          "min": 40,
+          "max": 40
+        },
+        "open_call_ms": {
+          "median": 81.07,
+          "p95": 81.802,
+          "min": 79.633,
+          "max": 81.802
+        },
+        "peak_rss_mib": {
+          "median": 269.328125,
+          "p95": 269.828125,
+          "min": 269.03125,
+          "max": 269.828125
+        },
+        "shown_ms": {
+          "median": 120.794,
+          "p95": 127.347,
+          "min": 118.535,
+          "max": 127.347
+        },
+        "steps": {
+          "median": 200,
+          "p95": 200,
+          "min": 200,
+          "max": 200
+        },
+        "total_ms": {
+          "median": 3568.789,
+          "p95": 3573.356,
+          "min": 3548.412,
+          "max": 3573.356
+        },
+        "ui_ms_max": {
+          "median": 0.571,
+          "p95": 2.787,
+          "min": 0.531,
+          "max": 2.787
+        },
+        "ui_ms_p50": {
+          "median": 0.359,
+          "p95": 1.248,
+          "min": 0.344,
+          "max": 1.248
+        },
+        "ui_ms_p95": {
+          "median": 0.449,
+          "p95": 2.145,
+          "min": 0.437,
+          "max": 2.145
+        },
+        "scenario": "scroll",
+        "viewer": "editor"
+      },
+      "runs": [
+        {
+          "scenario": "scroll",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 80.517,
+          "shown_ms": 119.241,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 0.352,
+          "ui_ms_p95": 0.449,
+          "ui_ms_max": 0.571,
+          "frame_ms_p50": 16.668,
+          "frame_ms_p95": 16.839,
+          "frame_ms_max": 19.037,
+          "lines_per_step": 40,
+          "lines_moved": 8000,
+          "total_ms": 3548.412,
+          "peak_rss_mib": 269.03125
+        },
+        {
+          "scenario": "scroll",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 81.07,
+          "shown_ms": 127.347,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 0.359,
+          "ui_ms_p95": 0.437,
+          "ui_ms_max": 0.549,
+          "frame_ms_p50": 16.666,
+          "frame_ms_p95": 16.834,
+          "frame_ms_max": 19.501,
+          "lines_per_step": 40,
+          "lines_moved": 8000,
+          "total_ms": 3564.884,
+          "peak_rss_mib": 269.328125
+        },
+        {
+          "scenario": "scroll",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 81.087,
+          "shown_ms": 124.031,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 0.344,
+          "ui_ms_p95": 0.44,
+          "ui_ms_max": 0.531,
+          "frame_ms_p50": 16.663,
+          "frame_ms_p95": 16.83,
+          "frame_ms_max": 18.775,
+          "lines_per_step": 40,
+          "lines_moved": 8000,
+          "total_ms": 3569.829,
+          "peak_rss_mib": 269.09375
+        },
+        {
+          "scenario": "scroll",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 79.633,
+          "shown_ms": 118.535,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 0.387,
+          "ui_ms_p95": 1.016,
+          "ui_ms_max": 1.533,
+          "frame_ms_p50": 16.652,
+          "frame_ms_p95": 16.859,
+          "frame_ms_max": 19.195,
+          "lines_per_step": 40,
+          "lines_moved": 8000,
+          "total_ms": 3568.789,
+          "peak_rss_mib": 269.59375
+        },
+        {
+          "scenario": "scroll",
+          "bytes": 52428788,
+          "viewer": "editor",
+          "open_call_ms": 81.802,
+          "shown_ms": 120.794,
+          "chars": 52428788,
+          "lines": 665038,
+          "steps": 200,
+          "ui_ms_p50": 1.248,
+          "ui_ms_p95": 2.145,
+          "ui_ms_max": 2.787,
+          "frame_ms_p50": 16.668,
+          "frame_ms_p95": 17.024,
+          "frame_ms_max": 20.141,
+          "lines_per_step": 40,
+          "lines_moved": 8000,
+          "total_ms": 3573.356,
+          "peak_rss_mib": 269.828125
+        }
+      ]
+    }
+  },
+  "note": "Measured on commit 0444bfd plus the perf/workloads branch (benchmark driver and the faster line-ending check). type-50mb with 0444bfd's line-ending check, same machine, 5 runs: ui_ms_p95 median 29.7 ms, frame_ms_p95 30.2 ms, peak RSS 422 MiB."
+}

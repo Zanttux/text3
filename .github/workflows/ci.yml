@@ -72,6 +72,46 @@ jobs:
           cargo test -p text3-app --test disk_full --locked -- --nocapture
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+  # Large-file workloads (#206, scripts/bench/workloads.py): the release
+  # build opens, filters, searches, types into and scrolls generated files
+  # through its own UI code and must stay within bench/budgets.json. The
+  # CI set is smaller than the full one (200 MB log instead of 1 GB, 50 MB
+  # find, 100 typed characters) and the budgets are generous: hosted
+  # runners are slow, shared and have no GPU (Linux: Xvfb and Mesa's
+  # software Vulkan; Windows: Direct3D's software adapter at ~200 ms per
+  # frame, with its own limits under workloads_by_os).
+  workloads:
+    name: workloads (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: rustup toolchain install
+      - run: cargo build --release --locked -p text3-app
+      - name: display server and software renderer
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends xvfb xauth mesa-vulkan-drivers libegl1 libgl1-mesa-dri libxkbcommon-x11-0
+      - name: workloads (Linux, Xvfb)
+        if: runner.os == 'Linux'
+        run: xvfb-run -a -s "-screen 0 1280x1024x24" python3 scripts/bench/workloads.py --quick --runs 3 --no-build --check bench/budgets.json --json target/workloads.json
+      - name: workloads
+        if: runner.os != 'Linux'
+        run: ${{ runner.os == 'Windows' && 'python' || 'python3' }} scripts/bench/workloads.py --quick --runs 3 --no-build --check bench/budgets.json --json target/workloads.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: workloads-${{ matrix.os }}
+          path: target/workloads.json
+          if-no-files-found: ignore
+
   # Dependency licenses, RustSec advisories and sources (deny.toml).
   deny:
     name: cargo-deny

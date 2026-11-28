@@ -1,5 +1,6 @@
 //! Application state for Text³, independent of the GUI toolkit.
 
+pub mod benchprobe;
 pub mod bookmarks;
 pub mod cli;
 

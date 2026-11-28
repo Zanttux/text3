@@ -259,6 +259,18 @@ impl LogView {
         self.index.line_count()
     }
 
+    /// Whether the first indexing pass has finished.
+    pub fn indexed(&self) -> bool {
+        self.indexing.is_none()
+    }
+
+    /// Whether the filter has gone through the whole indexed file.
+    pub fn filter_finished(&self) -> bool {
+        self.filter
+            .as_ref()
+            .is_some_and(|f| f.running.is_none() && f.scanned.1 && f.scanned.0 == self.index.end())
+    }
+
     /// Indexing progress 0..=100 while the first pass runs.
     pub fn progress(&self) -> Option<u8> {
         (self.indexing.is_some() && self.len > 0)
